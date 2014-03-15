@@ -1,0 +1,92 @@
+Turbo Assembler	 Version 3.1	    08/06/13 16:48:23	    Page 1
+PROC1.ASM
+
+
+
+      1	0000			     DATA SEGMENT
+      2	0000  40 21 69 1A 55 6A		     MY_LIST DB	40H,21H,69H,1AH,55H,6AH
+      3	      =0006			     ASIZE EQU $ - MY_LIST
+      4	0006  ????			     AVERAGE DW	?
+      5	0008			     DATA ENDS
+      6
+      7	0000			     STK SEGMENT
+      8	0000  64*(??)			     ARRAY DB 100 DUP(?)
+      9	      =STK:0064			     SSIZE EQU $
+     10	0064			     STK ENDS
+     11
+     12	0000			     CODE SEGMENT
+     13					     ASSUME DS:	DATA, CS:CODE, SS:STK
+     14	0000			     PROCEDURE PROC
+     15	0000  B8 0000			     MOV AX,0000H
+     16	0003  02 07		     L:	     ADD AL, [BX]
+     17	0005  73 02			     JNC SKIP
+     18	0007  FE C4			     INC AH
+     19	0009  43		     SKIP:   INC BX
+     20	000A  E2 F7			     LOOP L
+     21
+     22	000C  C3			     RET
+     23	000D			     PROCEDURE ENDP
+     24
+     25	000D  B8 0000s		     MAIN:   MOV AX, DATA
+     26	0010  8E D8				     MOV DS, AX
+     27	0012  B8 0000s				     MOV AX, STK
+     28	0015  8E D0				     MOV SS, AX
+     29
+     30	0017  B9 0006				     MOV CX, ASIZE
+     31	001A  51				     PUSH CX
+     32	001B  BB 0000r				     LEA BX, MY_LIST
+     33	001E  E8 FFDF				     CALL PROCEDURE
+     34	0021  59				     POP CX
+     35	0022  F7 F1				     DIV CX
+     36
+     37	0024  BB 0006r				     LEA BX, AVERAGE
+     38	0027  89 47 01				     MOV [BX+1], AX
+     39
+     40
+     41	002A  8B C2				     MOV AX, DX
+     42	002C  B2 0A				     MOV DL, 0AH
+     43	002E  F6 E2				     MUL DL
+     44	0030  F6 F1				     DIV CL
+     45	0032  88 07				     MOV [BX], AL
+     46
+     47	0034  8A C4				     MOV AL, AH
+     48	0036  F6 E2				     MUL DL
+     49	0038  F6 F1				     DIV CL
+     50	003A  88 07				     MOV [BX], AL
+     51
+     52	003C  B4 4C				     MOV AH, 4CH
+     53	003E  CD 21				     INT 21H
+     54	0040			     CODE ENDS
+     55					     END MAIN
+Turbo Assembler	 Version 3.1	    08/06/13 16:48:23	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "08/06/13"
+??FILENAME			  Text	 "PROC1	  "
+??TIME				  Text	 "16:48:23"
+??VERSION			  Number 030A
+@CPU				  Text	 0101H
+@CURSEG				  Text	 CODE
+@FILENAME			  Text	 PROC1
+@WORDSIZE			  Text	 2
+ARRAY				  Byte	 STK:0000
+ASIZE				  Number 0006
+AVERAGE				  Word	 DATA:0006
+L				  Near	 CODE:0003
+MAIN				  Near	 CODE:000D
+MY_LIST				  Byte	 DATA:0000
+PROCEDURE			  Near	 CODE:0000
+SKIP				  Near	 CODE:0009
+SSIZE				  Number STK:0064
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODE				  16  0040 Para	  none
+DATA				  16  0008 Para	  none
+STK				  16  0064 Para	  none
+

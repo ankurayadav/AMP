@@ -1,0 +1,59 @@
+Turbo Assembler	 Version 3.1	    07/23/13 16:14:37	    Page 1
+SLOOP.ASM
+
+
+
+      1	0000			     DATA SEGMENT
+      2	0000  456AD45512DA5487		     NUM1 DQ 456AD45512DA5487H
+      3	0008  1234567812345678		     NUM2 DQ 1234567812345678H
+      4	0010  ????????????????		     ANS DQ ?
+      5	0018			     DATA ENDS
+      6
+      7	0000			     CODE SEGMENT
+      8					     ASSUME DS:DATA, CS:CODE
+      9	0000  B8 0000s		     START:  MOV AX, DATA
+     10	0003  8E D8				     MOV DS,AX
+     11
+     12	0005  BE 0000				     MOV SI,00H
+     13	0008  BB 0000r			     LEA     BX, NUM1
+     14
+     15	000B  F8				     CLC
+     16	000C  B9 0004				     MOV CX, 04H
+     17	000F  8B 00		     L:		     MOV AX,[BX+SI]
+     18	0011  1B 40 08				     SBB AX,[BX+SI+8]
+     19	0014  89 40 10				     MOV [BX+SI+16],AX
+     20	0017  46				     INC SI
+     21	0018  46				     INC SI
+     22	0019  E2 F4				     LOOP L
+     23
+     24	001B  B4 4C				     MOV AH, 4CH
+     25	001D  CD 21				     INT 21H
+     26	001F			     CODE ENDS
+     27					     END START
+Turbo Assembler	 Version 3.1	    07/23/13 16:14:37	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "07/23/13"
+??FILENAME			  Text	 "SLOOP	  "
+??TIME				  Text	 "16:14:37"
+??VERSION			  Number 030A
+@CPU				  Text	 0101H
+@CURSEG				  Text	 CODE
+@FILENAME			  Text	 SLOOP
+@WORDSIZE			  Text	 2
+ANS				  Qword	 DATA:0010
+L				  Near	 CODE:000F
+NUM1				  Qword	 DATA:0000
+NUM2				  Qword	 DATA:0008
+START				  Near	 CODE:0000
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODE				  16  001F Para	  none
+DATA				  16  0018 Para	  none
+

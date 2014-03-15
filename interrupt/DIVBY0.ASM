@@ -1,0 +1,18 @@
+EXTRN LENSTR:ABS
+EXTRN ERRMSG:BYTE
+PUBLIC DIVBY0
+
+procedure segment
+ASSUME CS:PROCEDURE
+divby0 proc far
+	MOV AH, 40H
+	MOV BX,01
+	MOV CX, LENSTR
+	MOV DX, OFFSET ERRMSG
+	INT 21H
+
+	IRET
+divby0 endp
+
+procedure ends
+END

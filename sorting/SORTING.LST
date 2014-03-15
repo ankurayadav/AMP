@@ -1,0 +1,63 @@
+Turbo Assembler	 Version 3.1	    08/06/13 14:56:47	    Page 1
+SORTING.ASM
+
+
+
+      1	0000			     DATA SEGMENT
+      2	0000  40 21 69 1A 55 65		     MY_LIST DB	40H,21H,69H,1AH,55H,65H
+      3	      =0006			     ASIZE EQU $-MY_LIST
+      4	0006			     DATA ENDS
+      5
+      6	0000			     CODE SEGMENT
+      7					     ASSUME DS:	DATA, CS: CODE
+      8	0000  B8 0000s		     START:  MOV AX, DATA
+      9	0003  8E D8				     MOV DS, AX
+     10
+     11	0005  BB 0000r				     LEA BX, MY_LIST
+     12	0008  B9 0006				     MOV CX, ASIZE
+     13	000B  BE 0001		     L:		     MOV SI, 01H
+     14	000E  8A 40 FF			     LI:     MOV AL, [BX+SI-1]
+     15	0011  8A 20				     MOV AH, [BX+SI]
+     16	0013  3A E0				     CMP AH, AL
+     17	0015  72 05				     JC	N
+     18	0017  88 00				     MOV [BX+SI],AL
+     19	0019  88 60 FF				     MOV [BX+SI-1],AH
+     20	001C  46			     N:	     INC SI
+     21	001D  3B F1				     CMP SI, CX
+     22	001F  73 02				     JNC L1
+     23	0021  EB EB				     JMP LI
+     24	0023  E2 E6			     L1:     LOOP L
+     25
+     26	0025  B4 4C				     MOV AH, 4CH
+     27	0027  CD 21				     INT 21H
+     28	0029			     CODE ENDS
+     29					     END START
+Turbo Assembler	 Version 3.1	    08/06/13 14:56:47	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "08/06/13"
+??FILENAME			  Text	 "SORTING "
+??TIME				  Text	 "14:56:47"
+??VERSION			  Number 030A
+@CPU				  Text	 0101H
+@CURSEG				  Text	 CODE
+@FILENAME			  Text	 SORTING
+@WORDSIZE			  Text	 2
+ASIZE				  Number 0006
+L				  Near	 CODE:000B
+L1				  Near	 CODE:0023
+LI				  Near	 CODE:000E
+MY_LIST				  Byte	 DATA:0000
+N				  Near	 CODE:001C
+START				  Near	 CODE:0000
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODE				  16  0029 Para	  none
+DATA				  16  0006 Para	  none
+

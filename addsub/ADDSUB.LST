@@ -1,0 +1,62 @@
+Turbo Assembler	 Version 3.1	    07/16/13 16:36:48	    Page 1
+ADDSUB.ASM
+
+
+
+      1	0000			     MYDATA SEGMENT
+      2	0000  0010			     NUM1 DW 10H
+      3	0002  0020			     NUM2 DW 20H
+      4	0004  ????			     AADD DW ?
+      5	0006  ????			     ASUB DW ?
+      6	      =0005			     MYCONST EQU 05H
+      7	0008			     MYDATA ENDS
+      8
+      9	0000			     MYCODE SEGMENT
+     10						     ASSUME DS:MYDATA, CS:MYCODE
+     11	0000  B8 0000s		     START:  MOV AX, MYDATA
+     12	0003  8E D8				     MOV DS, AX
+     13
+     14	0005  8B 1E 0000r			     MOV BX, NUM1
+     15	0009  03 1E 0002r			     ADD BX, NUM2
+     16	000D  89 1E 0004r			     MOV AADD, BX
+     17
+     18	0011  8B 1E 0002r			     MOV BX, NUM2
+     19	0015  2B 1E 0000r			     SUB BX, NUM1
+     20	0019  89 1E 0006r			     MOV ASUB, BX
+     21
+     22	001D  8B 1E 0006r			     MOV BX, ASUB
+     23	0021  83 EB 05				     SUB BX, MYCONST
+     24	0024  89 1E 0006r			     MOV ASUB, BX
+     25
+     26	0028  B4 4C				     MOV AH, 4CH
+     27	002A  CD 21				     INT 21H
+     28	002C			     MYCODE ENDS
+     29					     END START
+Turbo Assembler	 Version 3.1	    07/16/13 16:36:48	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "07/16/13"
+??FILENAME			  Text	 "ADDSUB  "
+??TIME				  Text	 "16:36:48"
+??VERSION			  Number 030A
+@CPU				  Text	 0101H
+@CURSEG				  Text	 MYCODE
+@FILENAME			  Text	 ADDSUB
+@WORDSIZE			  Text	 2
+AADD				  Word	 MYDATA:0004
+ASUB				  Word	 MYDATA:0006
+MYCONST				  Number 0005
+NUM1				  Word	 MYDATA:0000
+NUM2				  Word	 MYDATA:0002
+START				  Near	 MYCODE:0000
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+MYCODE				  16  002C Para	  none
+MYDATA				  16  0008 Para	  none
+

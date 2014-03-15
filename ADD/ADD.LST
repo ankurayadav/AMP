@@ -1,0 +1,56 @@
+Turbo Assembler	 Version 3.1	    07/23/13 15:44:37	    Page 1
+ADD.ASM
+
+
+
+      1	0000			     DATA SEGMENT
+      2	0000  12345678			     NUM1 DD 12345678H
+      3	0004  456AD455			     NUM2 DD 456AD455H
+      4	0008  ????????			     ANS DD ?
+      5	000C			     DATA ENDS
+      6
+      7	0000			     CODE SEGMENT
+      8					     ASSUME DS:DATA, CS:CODE
+      9	0000  B8 0000s		     START:  MOV AX, DATA
+     10	0003  8E D8				     MOV DS,AX
+     11
+     12	0005  BB 0000r				     MOV BX,OFFSET NUM1
+     13
+     14	0008  8B 07				     MOV AX,[BX]
+     15	000A  03 47 04				     ADD AX,[BX+4]
+     16	000D  89 47 08				     MOV [BX+8],AX
+     17
+     18	0010  8B 47 02				     MOV AX,[BX+2]
+     19	0013  13 47 06				     ADC AX,[BX+6]
+     20	0016  89 47 0A				     MOV [BX+10],AX
+     21
+     22	0019  B4 4C				     MOV AH, 4CH
+     23	001B  CD 21				     INT 21H
+     24	001D			     CODE ENDS
+     25					     END START
+Turbo Assembler	 Version 3.1	    07/23/13 15:44:37	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "07/23/13"
+??FILENAME			  Text	 "ADD	  "
+??TIME				  Text	 "15:44:37"
+??VERSION			  Number 030A
+@CPU				  Text	 0101H
+@CURSEG				  Text	 CODE
+@FILENAME			  Text	 ADD
+@WORDSIZE			  Text	 2
+ANS				  Dword	 DATA:0008
+NUM1				  Dword	 DATA:0000
+NUM2				  Dword	 DATA:0004
+START				  Near	 CODE:0000
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODE				  16  001D Para	  none
+DATA				  16  000C Para	  none
+

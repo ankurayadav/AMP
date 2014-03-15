@@ -1,0 +1,10 @@
+
+ Start  Stop   Length Name               Class
+
+ 00000H 000AFH 000B0H DATA               
+ 000B0H 00113H 00064H STK                
+ 00120H 00172H 00053H PROCEDURE          
+ 00180H 001A2H 00023H CODE               
+
+Program entry point at 0018:0000
+

@@ -1,0 +1,103 @@
+Turbo Assembler	 Version 3.1	    08/27/13 17:01:37	    Page 1
+INOUT.ASM
+
+
+
+      1	0000			     DATA SEGMENT
+      2	0000  64*(00)			     BUF DB 100	DUP(0)
+      3	      =0064			     LENBUF EQU	$-BUF
+      4	0064			     DATA ENDS
+      5
+      6	0000			     STK SEGMENT STACK
+      7	0000  64*(00)			     DB	100 DUP(0)
+      8	0064				     TOS LABEL WORD
+      9	0064			     STK ENDS
+     10
+     11	0000			     CODE SEGMENT
+     12					     ASSUME CS:CODE, DS:DATA, SS:STK
+     13	0000			     START:
+     14	0000  B8 0000s				     MOV AX, DATA
+     15	0003  8E D8				     MOV DS, AX
+     16	0005  B8 0000s				     MOV AX, STK
+     17	0008  8E D0				     MOV SS, AX
+     18	000A  BC 0064r				     LEA SP, TOS
+     19
+     20	000D  BE 0000r				     LEA SI, BUF
+     21	0010  C6 04 62				     MOV BYTE PTR [SI],	LENBUF-2
+     22
+     23	0013  B4 0A				     MOV AH, 0AH
+     24	0015  BA 0000r				     LEA DX, BUF
+     25	0018  CD 21				     INT 21H
+     26
+     27	001A  8A 4C 01				     MOV CL, [SI+1]
+     28	001D  B5 00				     MOV CH, 00H
+     29	001F  B4 00				     MOV AH,00H
+     30
+     31	0021  8A 84 0002r		     L:	     MOV AL, [BUF+SI+2]
+     32	0025  3C 41				     CMP AL, 'A'
+     33	0027  72 1E				     JC	N
+     34	0029  3C 5B				     CMP AL, 'Z'+1
+     35	002B  73 09				     JNC LW
+     36	002D  04 20				     ADD AL, 20H
+     37	002F  88 84 0002r			     MOV [BUF+SI+2], AL
+     38	0033  EB 12 90				     JMP N
+     39	0036  3C 61			     LW: CMP AL, 'a'
+     40	0038  72 0D				     JC	N
+     41	003A  3C 7B				     CMP AL, 'z'+1
+     42	003C  73 09				     JNC N
+     43	003E  2C 20				     SUB AL, 20H
+     44	0040  88 84 0002r			     MOV [BUF+SI+2], AL
+     45	0044  EB 01 90				     JMP N
+     46	0047  46			     N:	     INC SI
+     47	0048  E2 D7				     LOOP L
+     48
+     49
+     50	004A  BE 0000r				     LEA SI, BUF
+     51	004D  8A 4C 01				     MOV CL, [SI+1]
+     52	0050  B5 00				     MOV CH, 00H
+     53	0052  B4 40				     MOV AH, 40H
+     54	0054  B0 00				     MOV AL, 00H
+     55	0056  BB 0001				     MOV BX, 0001H
+     56	0059  BA 0002r				     LEA DX, BUF+2
+     57	005C  CD 21				     INT 21H
+Turbo Assembler	 Version 3.1	    08/27/13 17:01:37	    Page 2
+INOUT.ASM
+
+
+
+     58
+     59	005E  B4 4C				     MOV AH, 4CH
+     60	0060  CD 21				     INT 21H
+     61
+     62	0062			     CODE ENDS
+     63					     END START
+Turbo Assembler	 Version 3.1	    08/27/13 17:01:37	    Page 3
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "08/27/13"
+??FILENAME			  Text	 "INOUT	  "
+??TIME				  Text	 "17:01:37"
+??VERSION			  Number 030A
+@CPU				  Text	 0101H
+@CURSEG				  Text	 CODE
+@FILENAME			  Text	 INOUT
+@WORDSIZE			  Text	 2
+BUF				  Byte	 DATA:0000
+L				  Near	 CODE:0021
+LENBUF				  Number 0064
+LW				  Near	 CODE:0036
+N				  Near	 CODE:0047
+START				  Near	 CODE:0000
+TOS				  Word	 STK:0064
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODE				  16  0062 Para	  none
+DATA				  16  0064 Para	  none
+STK				  16  0064 Para	  Stack
+

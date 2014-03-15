@@ -1,0 +1,21 @@
+INT 10H/ AH=2
+
+columns: 0-79
+rows: 0-24
+
+for row no.10: dh=9
+dl=0, beg     dl=79, end
+
+page number: contents are stored in video buffers
+	total 8 pages
+-page 0: active window means bh=0
+
+to clear screen scroll 25 lines, FOR THIS 
+
+INT 10h / AH = 06h - scroll up window.
+INT 10h / AH = 07h - scroll down window.
+
+Ques: Read a user input string and display it at center of the screen. i.e. (12,aprrox40)
+-use far procedure
+
+Implementation of 

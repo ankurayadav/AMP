@@ -1,0 +1,73 @@
+Turbo Assembler	 Version 3.1	    07/30/13 15:43:49	    Page 1
+MINMAX.ASM
+
+
+
+      1	0000			     DATA SEGMENT
+      2	0000  40 21 69 1A 55 65		     MY_LIST DB	40H,21H,69H,1AH,55H,65H
+      3	0006  ??			     MIN DB ?
+      4	0007  ??			     MAX DB ?
+      5	0008			     DATA ENDS
+      6
+      7	0000			     CODE SEGMENT
+      8					     ASSUME DS:DATA, CS:CODE
+      9
+     10	0000  B8 0000s		     START:  MOV AX, DATA
+     11	0003  8E D8				     MOV DS, AX
+     12
+     13	0005  BB 0000r				     LEA BX, MY_LIST
+     14	0008  8A 17				     MOV DL,[BX]
+     15	000A  8A 37				     MOV DH,[BX]
+     16
+     17	000C  BE 0001				     MOV SI, 01H
+     18
+     19	000F  B9 0005				     MOV CX, 05H
+     20	0012  8A 00		     L:		     MOV AL, [BX+SI]
+     21	0014  3A C2				     CMP AL, DL
+     22	0016  73 05				     JNC MX
+     23	0018  8A D0				     MOV DL, AL
+     24	001A  EB 07 90				     JMP N
+     25	001D  3A C6			     MX:     CMP AL, DH
+     26	001F  72 02				     JC	N
+     27	0021  8A F0				     MOV DH, AL
+     28	0023  46			     N:	     INC SI
+     29	0024  E2 EC				     LOOP L
+     30
+     31	0026  BB 0006r				     LEA BX, MIN
+     32	0029  88 17				     MOV [BX],DL
+     33	002B  BB 0007r				     LEA BX, MAX
+     34	002E  88 37				     MOV [BX],DH
+     35
+     36	0030  B4 4C				     MOV AH, 4CH
+     37	0032  CD 21				     INT 21H
+     38	0034			     CODE ENDS
+     39					     END START
+Turbo Assembler	 Version 3.1	    07/30/13 15:43:49	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "07/30/13"
+??FILENAME			  Text	 "MINMAX  "
+??TIME				  Text	 "15:43:49"
+??VERSION			  Number 030A
+@CPU				  Text	 0101H
+@CURSEG				  Text	 CODE
+@FILENAME			  Text	 MINMAX
+@WORDSIZE			  Text	 2
+L				  Near	 CODE:0012
+MAX				  Byte	 DATA:0007
+MIN				  Byte	 DATA:0006
+MX				  Near	 CODE:001D
+MY_LIST				  Byte	 DATA:0000
+N				  Near	 CODE:0023
+START				  Near	 CODE:0000
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODE				  16  0034 Para	  none
+DATA				  16  0008 Para	  none
+

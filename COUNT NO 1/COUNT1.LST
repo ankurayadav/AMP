@@ -1,0 +1,69 @@
+Turbo Assembler	 Version 3.1	    08/13/13 16:42:53	    Page 1
+COUNT1.ASM
+
+
+
+      1	0000			     DATA SEGMENT
+      2	0000  ABCD			     NUM DW 0ABCDH
+      3	0002  00			     COUNT DB 00H
+      4	0003			     DATA ENDS
+      5
+      6	0000			     STK SEGMENT STACK
+      7	0000  64*(00)			     DB	100 DUP(00)
+      8	0064				     TOS LABEL WORD
+      9	0064			     STK ENDS
+     10
+     11	0000			     CODE SEGMENT
+     12					     ASSUME CS:	CODE, DS: DATA,	SS: STK
+     13
+     14	0000			     COUNT1 PROC
+     15	0000  D1 06 0000r		     L:	     ROL NUM, 01H
+     16	0004  73 04				     JNC X
+     17	0006  FE 06 0002r			     INC COUNT
+     18	000A  E2 F4			     X:	     LOOP L
+     19	000C  C3				     RET
+     20	000D			     COUNT1 ENDP
+     21
+     22	000D  B8 0000s		     START:  MOV AX, DATA
+     23	0010  8E D8				     MOV DS, AX
+     24	0012  B8 0000s				     MOV AX, STK
+     25	0015  8E D0				     MOV SS, AX
+     26
+     27	0017  B9 0010				     MOV CX, 10H
+     28
+     29	001A  E8 FFE3				     CALL COUNT1
+     30
+     31	001D  B4 4C				     MOV AH, 4CH
+     32	001F  CD 21				     INT 21H
+     33	0021			     CODE ENDS
+     34					     END START
+Turbo Assembler	 Version 3.1	    08/13/13 16:42:53	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "08/13/13"
+??FILENAME			  Text	 "COUNT1  "
+??TIME				  Text	 "16:42:53"
+??VERSION			  Number 030A
+@CPU				  Text	 0101H
+@CURSEG				  Text	 CODE
+@FILENAME			  Text	 COUNT1
+@WORDSIZE			  Text	 2
+COUNT				  Byte	 DATA:0002
+COUNT1				  Near	 CODE:0000
+L				  Near	 CODE:0000
+NUM				  Word	 DATA:0000
+START				  Near	 CODE:000D
+TOS				  Word	 STK:0064
+X				  Near	 CODE:000A
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODE				  16  0021 Para	  none
+DATA				  16  0003 Para	  none
+STK				  16  0064 Para	  Stack
+
